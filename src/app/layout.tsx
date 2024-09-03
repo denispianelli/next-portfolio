@@ -27,8 +27,8 @@ export default function RootLayout({
       <body
         className={cn(
           'flex min-h-screen flex-col font-sans antialiased',
-          inter.className,
-          playfairDisplay.className,
+          inter.variable,
+          playfairDisplay.variable,
         )}
       >
         <ThemeProvider
