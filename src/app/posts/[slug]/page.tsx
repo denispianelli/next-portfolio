@@ -1,11 +1,18 @@
+import MDXContent from '@/components/mdx-content';
 import { getPostBySlug } from '@/lib/posts';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeftIcon } from 'lucide-react';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+/**
+ * Renders a page for a specific post.
+ *
+ * @param params - The parameters for the page.
+ * @param params.slug - The slug of the post.
+ * @returns The rendered post page.
+ */
 export default async function PostPage({
   params,
 }: {
@@ -51,7 +58,7 @@ export default async function PostPage({
         </header>
 
         <main className="prose dark:prose-invert mt-16">
-          <MDXRemote source={content} />
+          <MDXContent source={content} />
         </main>
       </div>
     </section>
