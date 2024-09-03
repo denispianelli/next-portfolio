@@ -1,3 +1,13 @@
-export default function PostsPage() {
-  return <div>PostsPage</div>;
+import Posts from '@/components/posts';
+import { getPosts } from '@/lib/posts';
+
+export default async function PostsPage() {
+  const posts = await getPosts();
+
+  return (
+    <section className="container max-w-3xl pb-24 pt-20">
+      <h1 className="title mb-12">Posts</h1>
+      <Posts posts={posts} />
+    </section>
+  );
 }

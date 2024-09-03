@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { Post } from './definitions';
+import { Post, PostMetadata } from './definitions';
 
 /**
  * The root directory path for the posts content.
@@ -30,4 +30,46 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   } catch (error) {
     console.error(error);
   }
+}
+
+/**
+ * Retrieves the metadata of a post.
+ *
+ * @param _filePath - The file path of the post.
+ * @returns The post metadata.
+ */
+export function getPostMetadata(_filePath: string): PostMetadata {
+  const slug = _filePath.replace(/\.(mdx|md)/, '');
+  const filePath = path.join(rootDir, _filePath);
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const { data } = matter(fileContent);
+  return { ...data, slug };
+}
+
+/**
+ * Retrieves the metadata of the posts.
+ *
+ * @param limit - The maximum number of posts to retrieve.
+ * @returns A promise that resolves to an array of PostMetadata objects.
+ */
+export async function getPosts(limit?: number): Promise<PostMetadata[]> {
+  const files = fs.readdirSync(rootDir);
+
+  /**
+   * Sorts an array of posts based on their published date.
+   *
+   * @param posts - The array of posts to be sorted.
+   * @returns The sorted array of posts.
+   */
+  const posts = files
+    .map((file) => getPostMetadata(file))
+    .sort((a, b) => {
+      if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? ''))
+        return 1;
+      else return -1;
+    });
+
+  if (limit) return posts.slice(0, limit);
+
+  return posts;
 }

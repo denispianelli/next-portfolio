@@ -6,13 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-/**
- * Renders a page for a specific post.
- *
- * @param params - The parameters for the page.
- * @param params.slug - The slug of the post.
- * @returns The rendered post page.
- */
 export default async function PostPage({
   params,
 }: {
@@ -38,19 +31,16 @@ export default async function PostPage({
         </Link>
 
         {image && (
-          <div className="relative mb-6 h-96 w-full overflow-hidden rounded-lg">
-            <Image
-              src={image}
-              alt={title || ''}
-              className="object-contain"
-              sizes="(max-width: 640px) 100vw, 640px"
-              fill
-              priority
-            />
-          </div>
+          <Image
+            src={image}
+            alt={title || ''}
+            width={800}
+            height={400}
+            priority
+          />
         )}
 
-        <header>
+        <header className="mt-8">
           <h1 className="title">{title}</h1>
           <p className="mt-3 text-xs text-muted-foreground">
             {author} / {formatDate(publishedAt ?? '')}
