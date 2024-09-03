@@ -1,5 +1,4 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
+import Intro from '@/components/intro';
 
 /**
  * Renders the Home component.
@@ -8,8 +7,8 @@ import Header from '@/components/header';
  */
 export default function Home() {
   return (
-    <section className="container max-w-3xl">
-      <h1>My Portfolio</h1>
+    <section className="container max-w-3xl py-20">
+      <Intro />
     </section>
   );
 }
