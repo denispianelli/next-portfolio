@@ -60,7 +60,7 @@ export default async function PostPage({
           </p>
         </header>
 
-        <main className="prose dark:prose-invert mt-16">
+        <main className="prose mt-16 dark:prose-invert">
           <MDXContent source={content} />
         </main>
       </div>
