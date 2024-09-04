@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 
+/**
+ * Renders the NotFound component.
+ *
+ * @returns JSX element representing the NotFound component.
+ */
 export default function NotFound() {
   return (
     <section className="pb-24 pt-40">

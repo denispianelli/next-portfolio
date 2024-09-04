@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfairDisplay = Playfair_Display({
@@ -41,6 +42,7 @@ export default function RootLayout({
           <main className="grow">{children}</main>
           <Footer />
         </ThemeProvider>{' '}
+        <Toaster />
       </body>
     </html>
   );
