@@ -1,5 +1,5 @@
 import MDXContent from '@/components/mdx-content';
-import { getPostBySlug, getPosts } from '@/lib/posts';
+import { getContent, getContentBySlug } from '@/lib/posts';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeftIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ import { notFound } from 'next/navigation';
  * @returns An array of objects containing the slug of each post.
  */
 export async function generateStaticParams() {
-  const posts = await getPosts();
+  const posts = await getContent('posts');
 
   const slugs = posts.map((post) => ({ slug: post.slug }));
 
@@ -25,7 +25,7 @@ export default async function PostPage({
   params: { slug: string };
 }) {
   const { slug } = params;
-  const post = await getPostBySlug(slug);
+  const post = await getContentBySlug(slug, 'posts');
 
   if (!post) return notFound();
 
