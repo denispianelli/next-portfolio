@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { formatDate } from '@/lib/utils';
-import { PostMetadata } from '@/lib/definitions';
+import { ContentMetadata } from '@/lib/definitions';
 
 /**
  * Renders a list of posts.
@@ -13,7 +13,7 @@ import { PostMetadata } from '@/lib/definitions';
 export default function Posts({
   posts,
 }: {
-  posts: PostMetadata[];
+  posts: ContentMetadata[];
 }): JSX.Element {
   return (
     <ul className="flex flex-col gap-8">
