@@ -1,6 +1,6 @@
 import Posts from '@/components/posts';
 import Search from '@/components/ui/search';
-import { getPosts } from '@/lib/posts';
+import { getContent } from '@/lib/posts';
 
 /**
  * Renders the PostsPage component.
@@ -14,7 +14,7 @@ export default async function PostsPage({
   searchParams?: { query: string };
 }) {
   const query = searchParams?.query || '';
-  const posts = await getPosts();
+  const posts = await getContent('posts');
   const filteredPosts = posts.filter(
     (post) =>
       post.title && post.title.toLowerCase().includes(query.toLowerCase()),
