@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Projects from '@/components/projects';
 import { getContent } from '@/lib/posts';
+import { Badge } from './ui/badge';
 
 export default async function RecentProjects() {
   const projects = await getContent('projects', 2);
@@ -8,7 +9,13 @@ export default async function RecentProjects() {
   return (
     <section className="pb-24">
       <div>
-        <h2 className="title mb-12">Recent projects</h2>
+        {/* <h2 className="title mb-12">Recent projects</h2> */}
+        <div className="mb-2 flex justify-center">
+          <Badge className="text-sm">Recent projects</Badge>
+        </div>
+        <h2 className="title mb-12 text-center text-4xl font-semibold no-underline">
+          Check out my latest work
+        </h2>
         <Projects projects={projects} />
 
         <Link
