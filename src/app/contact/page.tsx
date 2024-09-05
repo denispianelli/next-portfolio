@@ -1,5 +1,13 @@
 import ContactForm from '@/components/contact-form';
 import { Badge } from '@/components/ui/badge';
+import { Metadata } from 'next';
+
+/**
+ * Represents the metadata for the Contact page.
+ */
+export const metadata: Metadata = {
+  title: 'Contact',
+};
 
 /**
  * Renders the ContactPage component.
