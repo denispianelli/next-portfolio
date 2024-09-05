@@ -21,7 +21,7 @@ export default function ContactPage() {
         <Badge className="text-sm">Contact</Badge>
       </div>
       <h2 className="title mb-12 text-center text-4xl font-semibold no-underline">
-        Let's get in touch
+        Let&apos;s get in touch
       </h2>
       <ContactForm />
     </section>
