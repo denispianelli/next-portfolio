@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import Marquee from '@/components/magicui/marquee';
+import { Badge } from './ui/badge';
 
 const reviews = [
   {
@@ -80,19 +81,27 @@ const ReviewCard = ({
 
 export function Testimonials() {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background">
-      <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
+    <div>
+      <div className="mb-2 flex justify-center">
+        <Badge className="text-sm">Testimonials</Badge>
+      </div>
+      <h2 className="title mb-12 text-center text-4xl font-semibold no-underline">
+        What others say about my work
+      </h2>
+      <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background">
+        <Marquee pauseOnHover className="[--duration:20s]">
+          {firstRow.map((review) => (
+            <ReviewCard key={review.username} {...review} />
+          ))}
+        </Marquee>
+        <Marquee reverse pauseOnHover className="[--duration:20s]">
+          {secondRow.map((review) => (
+            <ReviewCard key={review.username} {...review} />
+          ))}
+        </Marquee>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
+      </div>
     </div>
   );
 }
