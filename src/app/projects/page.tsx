@@ -1,5 +1,13 @@
 import Projects from '@/components/projects';
 import { getContent } from '@/lib/posts';
+import { Metadata } from 'next';
+
+/**
+ * Represents the metadata for a page.
+ */
+export const metadata: Metadata = {
+  title: 'Projects',
+};
 
 export default async function ProjectsPage() {
   const projects = await getContent('projects');

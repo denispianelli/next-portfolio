@@ -2,9 +2,29 @@ import MDXContent from '@/components/mdx-content';
 import { getContent, getContentBySlug } from '@/lib/posts';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeftIcon } from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+
+/**
+ * Generates metadata for a post based on the provided slug.
+ * @param params - The parameters object.
+ * @param params.slug - The slug of the post.
+ * @returns A promise that resolves to the generated metadata.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const slug = params.slug;
+  const post = await getContentBySlug(slug, 'posts');
+
+  return {
+    title: post?.metadata.title || 'Posts',
+  };
+}
 
 /**
  * Generates static parameters for the posts.

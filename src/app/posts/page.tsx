@@ -1,6 +1,14 @@
 import Posts from '@/components/posts';
 import Search from '@/components/ui/search';
 import { getContent } from '@/lib/posts';
+import { Metadata } from 'next';
+
+/**
+ * Represents the metadata for a page.
+ */
+export const metadata: Metadata = {
+  title: 'Posts',
+};
 
 /**
  * Renders the PostsPage component.
