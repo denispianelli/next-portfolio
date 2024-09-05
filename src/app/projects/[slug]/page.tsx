@@ -7,6 +7,26 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { notFound } from 'next/navigation';
 import { getContent, getContentBySlug } from '@/lib/posts';
 import { Button } from '@/components/ui/button';
+import { Metadata } from 'next';
+
+/**
+ * Generates metadata for a project page.
+ * @param params - The parameters for generating metadata.
+ * @param params.slug - The slug of the project.
+ * @returns A promise that resolves to the generated metadata.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const slug = params.slug;
+  const post = await getContentBySlug(slug, 'projects');
+
+  return {
+    title: post?.metadata.title || 'Projects',
+  };
+}
 
 /**
  * Generates static parameters for the page.
