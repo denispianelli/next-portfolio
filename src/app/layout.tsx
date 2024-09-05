@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   },
   description:
     'Welcome to my portfolio! I’m a passionate full-stack developer with expertise in Next.js, creating seamless and high-performance web applications. Explore my work to see how I bring ideas to life through clean code and innovative solutions.',
+  metadataBase: new URL('https://next-portfolio-swart-xi.vercel.app/'),
 };
 
 export default function RootLayout({
