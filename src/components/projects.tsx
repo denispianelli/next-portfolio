@@ -1,8 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { formatDate } from '@/lib/utils';
 import { ContentMetadata } from '@/lib/definitions';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
+import { Badge } from './ui/badge';
+import GitHub from './icons/github';
 
 export default function Projects({
   projects,
@@ -12,35 +20,60 @@ export default function Projects({
   return (
     <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       {projects.map((project) => (
-        <li key={project.slug} className="group relative">
-          <Link href={`/projects/${project.slug}`}>
-            {project.image && (
-              <div className="h-72 w-full overflow-hidden bg-muted sm:h-60">
+        <Card
+          key={project.slug}
+          className={
+            'h-full flex-col overflow-hidden border transition-all duration-300 ease-out hover:shadow-lg'
+          }
+        >
+          <li className="group relative">
+            <Link href={`/projects/${project.slug}`}>
+              {project.image && (
                 <Image
                   src={project.image}
                   alt={project.title || ''}
-                  fill
-                  sizes="80vw"
-                  className="rounded-lg object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  width={500}
+                  height={300}
+                  priority
+                  className="h-40 w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
+              )}
+            </Link>
+          </li>
+          <CardHeader className="px-2">
+            <div className="space-y-1">
+              <CardTitle className="mt-1 text-base">{project.title}</CardTitle>
+              <time className="font-sans text-xs">{project.publishedAt}</time>
+            </div>
+            <div className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert">
+              {project.summary}
+            </div>
+          </CardHeader>
+          <CardContent className="mt-auto flex flex-col px-2">
+            {project.tags && (
+              <div className="mt-2 flex flex-wrap gap-1">
+                {project.tags?.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant={'secondary'}
+                    className="px-1 py-0 text-[10px]"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
               </div>
             )}
-
-            <div className="absolute inset-[1px] rounded-lg bg-background/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-            <div className="absolute inset-x-0 bottom-0 translate-y-2 px-6 py-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-              <h2 className="title line-clamp-1 text-xl no-underline">
-                {project.title}
-              </h2>
-              <p className="line-clamp-1 text-sm text-muted-foreground">
-                {project.summary}
-              </p>
-              <p className="text-xs font-light text-muted-foreground">
-                {formatDate(project.publishedAt ?? '')}
-              </p>
-            </div>
-          </Link>
-        </li>
+          </CardContent>
+          <CardFooter className="px-2 pb-2">
+            {project.github && (
+              <Link href={project.github}>
+                <Badge className="flex items-center gap-2 text-[10px]">
+                  <GitHub /> Source
+                </Badge>
+              </Link>
+            )}
+          </CardFooter>
+        </Card>
       ))}
     </ul>
   );
