@@ -6,6 +6,7 @@ export type ContentMetadata = {
   author?: string;
   publishedAt?: string;
   github?: string;
+  tags?: string[];
 };
 
 export type Content = {
