@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
-import '../styles/globals.css';
+
+import { Analytics } from '@vercel/analytics/react';
+
 import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import BlurFade from '@/components/magicui/blur-fade';
+
+import { cn } from '@/lib/utils';
+
+import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfairDisplay = Playfair_Display({
@@ -51,6 +56,7 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>{' '}
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
