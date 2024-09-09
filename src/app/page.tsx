@@ -15,7 +15,7 @@ const BLUR_FADE_DELAY = 0.04;
 export default function Home() {
   return (
     <section className="container max-w-4xl py-20">
-      <BlurFade delay={BLUR_FADE_DELAY}>
+      <BlurFade delay={BLUR_FADE_DELAY} yOffset={0}>
         <Intro />
       </BlurFade>
       <BlurFade delay={BLUR_FADE_DELAY * 3}>
