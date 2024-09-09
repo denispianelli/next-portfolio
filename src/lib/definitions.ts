@@ -3,9 +3,11 @@ export type ContentMetadata = {
   title?: string;
   summary?: string;
   image?: string;
+  video?: string;
   author?: string;
   publishedAt?: string;
   github?: string;
+  website?: string;
   tags?: string[];
 };
 
