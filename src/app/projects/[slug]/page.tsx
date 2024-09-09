@@ -8,6 +8,9 @@ import { notFound } from 'next/navigation';
 import { getContent, getContentBySlug } from '@/lib/posts';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
+import GitHub from '@/components/icons/github';
+import { Badge } from '@/components/ui/badge';
+import { Globe } from 'lucide-react';
 
 /**
  * Generates metadata for a project page.
@@ -53,7 +56,7 @@ export default async function Project({
   }
 
   const { metadata, content } = project;
-  const { title, image, author, publishedAt, github } = metadata;
+  const { title, image, author, publishedAt, github, website } = metadata;
 
   return (
     <section className="pb-24 pt-20">
@@ -85,11 +88,21 @@ export default async function Project({
             {author} / {formatDate(publishedAt ?? '')}
           </p>
           <div className="mt-2 flex gap-2">
-            <Link href={github || ''} target="_blank">
-              <Button size={'sm'} variant={'default'}>
-                GitHub
-              </Button>
-            </Link>
+            {github && (
+              <Link href={github} target="_blank">
+                <Badge className="flex items-center gap-2 text-[10px]">
+                  <GitHub /> Source
+                </Badge>
+              </Link>
+            )}
+
+            {website && (
+              <Link href={website} target="_blank">
+                <Badge className="flex items-center gap-2 text-[10px]">
+                  <Globe size={12} /> Website
+                </Badge>
+              </Link>
+            )}
           </div>
         </header>
 
