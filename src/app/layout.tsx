@@ -4,14 +4,14 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 
 import { ThemeProvider } from '@/components/theme-provider';
-import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { Toaster } from '@/components/ui/sonner';
-import BlurFade from '@/components/magicui/blur-fade';
 
 import { cn } from '@/lib/utils';
 
 import '../styles/globals.css';
+import Navbar from '@/components/navbar';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfairDisplay = Playfair_Display({
@@ -49,11 +49,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <BlurFade delay={0.04}>
-            <Header />
-          </BlurFade>
-          <main className="grow">{children}</main>
-          <Footer />
+          <TooltipProvider delayDuration={0}>
+            <main className="grow">{children}</main>
+            <Navbar />
+            <Footer />
+          </TooltipProvider>
         </ThemeProvider>{' '}
         <Toaster />
         <Analytics />
