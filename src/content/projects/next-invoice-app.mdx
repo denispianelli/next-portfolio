@@ -1,0 +1,160 @@
+---
+  title: NextJs Invoice App
+  summary: A Web Invoice App developed with Next.js.
+  image: 
+  video: /videos/projects/next-invoice.app.webm
+  author: 'Denis Pianelli'
+  publishedAt: '2024-09-09'
+  website: https://nextjs-invoice-app-pearl.vercel.app
+  github: https://github.com/denispianelli/invoice-app
+  tags: [Next.js, React, TypeScript, PostgreSQL, Auth.js, TailwindCSS, Shadcn/ui]
+---
+
+# How I Developed an Invoicing Web App with Next.js, PostgreSQL, and Auth.js
+
+In this article, I’ll walk you through how I developed an invoicing web app using **Next.js**, **PostgreSQL**, and a few other key tools to ensure a smooth, secure, and user-friendly experience. This project allowed me to explore several modern technologies while building a robust and performant application. Here's an overview of the steps, features, and technical decisions I made.
+
+## 1. Why I Chose Next.js for This Project
+
+**Next.js** is a powerful framework that supports both static pages and full-stack applications, making it an excellent choice for building an invoicing app.
+
+- **React Server Components**: I leveraged React Server Components to optimize server-side data fetching and reduce unnecessary client-side data transfer. This approach improves performance and enhances security by keeping sensitive operations on the server.
+
+- **Server-Side Actions**: Instead of relying on traditional API routes, I used the `'use server'` directive in Next.js, which allowed me to make **direct PostgreSQL requests** for actions like creating, updating, and deleting invoices. This architecture removes the need for a separate API layer and keeps all the logic on the server.
+
+## 2. Using PostgreSQL as the Database
+
+To store and manage user, client, and invoice data, I chose **PostgreSQL**. Here’s why:
+
+- **SQL for Complex Queries**: PostgreSQL allows for writing complex SQL queries, which is ideal for advanced invoice operations like calculating totals, handling currencies, or generating reports.
+
+- **Relational Database**: Managing relationships between tables (users, clients, invoices) is straightforward with PostgreSQL. This helped me structure my data logically and query it efficiently.
+
+### Direct SQL Queries Using React Server Components
+
+With Next.js’s **React Server Components**, I was able to bypass API routes entirely and perform direct database queries on the server. Using the `'use server'` functionality allowed me to directly interact with the database from the server-side components.
+
+For example, here’s how I handled the creation of a new invoice:
+
+```tsx
+'use server';
+
+import { sql } from '@vercel/postgres';
+
+export async function createInvoice(invoiceData) {
+  await sql`
+			INSERT INTO invoices (id, created_at, payment_due, description, payment_terms, client_name, client_email, status, total,sender_address_id, client_address_id, user_id)
+			VALUES (${invoiceId}, ${invoiceDate}, ${paymentDue.toDateString()}, $  {description}, ${paymentTerms}, ${clientName}, ${clientEmail}, ${status}, ${total}, ${senderAddressId}, ${clientAddressId}, ${user.id})
+			RETURNING id
+			`;
+}
+```
+
+This method ensures that all interactions with the database are done securely on the server side, improving both performance and security by avoiding client-side data exposure.
+
+## 3. Authentication with Auth.js and JWT
+
+Authentication is crucial for securing user data and ensuring that only authorized users can access invoicing features. I chose **Auth.js** to handle authentication in this project.
+
+- **JWT \(JSON Web Tokens\)**: Auth.js uses JWT sessions to authenticate users. Each user receives a secure token, which is stored client-side and sent with each request to verify the user's identity. The benefit of using JWT is that it’s stateless, meaning the server doesn’t need to keep sessions in memory, improving scalability.
+
+### Why This Choice?
+
+I opted for **Auth.js** and JWT for several reasons:
+
+- **Security**: JWT sessions are encrypted and provide secure authentication.
+- **Simplicity**: Auth.js integrates smoothly with Next.js and simplifies session management.
+- **Scalability**: Since JWT is stateless, the app can scale easily as user demand grows.
+
+Here’s an example of how I integrated Auth.js in server actions to manage invoice data:
+
+```ts
+import { auth } from '@/auth';
+
+export default async function UserAvatar() {
+  const session = await auth()
+
+  if (!session.user) return null
+
+  return (
+    <div>
+      <img src={session.user.image} alt="User Avatar" />
+    </div>
+  )
+}
+```
+
+## 4. Data Validation with Zod
+
+When handling user data, it’s important to ensure that the data is valid before storing or processing it. For this, I used **Zod** as a data validation tool.
+
+- **Simplicity**: Zod allows you to define clear validation schemas for your data, whether it’s validating a new invoice or a signup form.
+- **Typesafe**: Zod integrates well with TypeScript, ensuring that the validated data matches the expected types.
+
+Here’s an example of validating an invoice:
+
+```ts
+import { z } from 'zod';
+
+const invoiceSchema = z.object({
+  client: z.string(),
+  amount: z.number().min(0),
+  dueDate: z.string().optional(),
+});
+
+export function validateInvoice(invoice) {
+  return invoiceSchema.parse(invoice);
+}
+```
+
+### Why Zod?
+
+- **Clarity**: Zod makes it easy to define clear and precise validation rules.
+- **Error Handling**: In case of validation failure, Zod provides helpful error messages, making it easier to give meaningful feedback to users.
+
+## 5. Implementing Dark/Light Mode with Next-Theme
+
+To improve user experience, I implemented a **dark/light mode** using **next-theme**. Allowing users to switch between themes enhances accessibility and provides a personalized experience.
+
+- **User Preferences**: The `next-theme` package lets me save user preferences for dark or light mode in local storage, ensuring the selected theme persists across sessions.
+
+- **Seamless Integration**: With a few lines of code, I was able to toggle the theme globally across the app without performance issues. Here's how I implemented it:
+
+```tsx
+import { ThemeProvider } from 'next-themes';
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <ThemeProvider attribute="class">
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
+}
+
+export default MyApp;
+```
+
+This implementation provides a smooth theme-switching experience and ensures accessibility for users who prefer either light or dark modes.
+
+## 6. Security Considerations
+
+When building an invoicing app, **security** is a top priority. I implemented several measures to protect user data and ensure the app is safe:
+
+- **Data Encryption**: Sensitive data such as passwords and JWT tokens are encrypted, both in transit and at rest. This prevents unauthorized access in case of interception.
+
+- **SQL Injection Prevention**: Vercel-postgres prevents it.
+
+  1. The SDK extracts your parameters and adds them to an array
+  2. The SDK sends the query string and the array of parameters to your PostgreSQL server. This is called a parameterized query, and it's a common pattern in modern JavaScript SQL libraries
+  3. Your Postgres server sanitizes your parameters and inserts them into your query
+  4. Your query is finally executed.
+
+- **Session Management**: JWT tokens are securely stored and only transmitted over HTTPS. Additionally, they are signed to prevent tampering, and have an expiration time to limit the session duration.
+
+- **Input Validation**: With Zod, I ensure that any data entering the system (e.g., via forms or server-side actions) is thoroughly validated, reducing the risk of malicious inputs affecting the system.
+
+## Conclusion
+
+Developing this invoicing web app was an opportunity to leverage modern technologies like **Next.js**, **PostgreSQL**, **Auth.js**, **Zod**, and **Next-Theme** to build a performant, secure, and user-friendly application. Each technology was carefully selected to meet the project’s specific needs: optimal data management, enhanced security, user personalization, and precise data validation.
+
+By focusing on security and user experience, I was able to build a scalable and reliable platform that can grow with user demand. If you have any questions or would like to discuss this project further, feel free to reach out.
