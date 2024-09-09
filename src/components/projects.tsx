@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,12 +13,23 @@ import {
 } from './ui/card';
 import { Badge } from './ui/badge';
 import GitHub from './icons/github';
+import { useRef } from 'react';
+import { Globe } from 'lucide-react';
+import { formatDate } from '@/lib/utils';
 
 export default function Projects({
   projects,
 }: {
   projects: ContentMetadata[];
 }) {
+  const video = useRef<HTMLVideoElement | null>(null);
+  const playVideo = () => {
+    if (video.current) video.current.play();
+  };
+  const pauseVideo = () => {
+    if (video.current) video.current.pause();
+  };
+
   return (
     <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       {projects.map((project) => (
@@ -28,6 +41,18 @@ export default function Projects({
         >
           <li className="group relative">
             <Link href={`/projects/${project.slug}`}>
+              {project.video && (
+                <video
+                  ref={video}
+                  src={project.video}
+                  onMouseEnter={playVideo}
+                  onMouseLeave={pauseVideo}
+                  loop
+                  muted
+                  playsInline
+                  className='group-hover:scale-105" h-40 w-full object-cover object-center transition-transform duration-500'
+                />
+              )}
               {project.image && (
                 <Image
                   src={project.image}
@@ -43,7 +68,9 @@ export default function Projects({
           <CardHeader className="px-2">
             <div className="space-y-1">
               <CardTitle className="mt-1 text-base">{project.title}</CardTitle>
-              <time className="font-sans text-xs">{project.publishedAt}</time>
+              <time className="font-sans text-xs">
+                {project.publishedAt && formatDate(project.publishedAt)}
+              </time>
             </div>
             <div className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert">
               {project.summary}
@@ -64,11 +91,18 @@ export default function Projects({
               </div>
             )}
           </CardContent>
-          <CardFooter className="px-2 pb-2">
+          <CardFooter className="gap-2 px-2 pb-2">
             {project.github && (
-              <Link href={project.github}>
+              <Link href={project.github} target="_blank">
                 <Badge className="flex items-center gap-2 text-[10px]">
                   <GitHub /> Source
+                </Badge>
+              </Link>
+            )}
+            {project.website && (
+              <Link href={project.website} target="_blank">
+                <Badge className="flex items-center gap-2 text-[10px]">
+                  <Globe size={12} /> Website
                 </Badge>
               </Link>
             )}
