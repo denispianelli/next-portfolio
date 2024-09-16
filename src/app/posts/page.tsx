@@ -1,6 +1,6 @@
 import Posts from '@/components/posts';
 import Search from '@/components/ui/search';
-import { getContent } from '@/lib/posts';
+import { getContent } from '@/lib/content';
 import { Metadata } from 'next';
 
 /**

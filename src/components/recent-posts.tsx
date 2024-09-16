@@ -1,4 +1,4 @@
-import { getContent } from '@/lib/posts';
+import { getContent } from '@/lib/content';
 import Posts from './posts';
 import Link from 'next/link';
 import { Badge } from './ui/badge';
