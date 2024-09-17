@@ -1,5 +1,5 @@
 import MDXContent from '@/components/mdx-content';
-import { getContent, getContentBySlug } from '@/lib/posts';
+import { getContent, getContentBySlug } from '@/lib/content';
 import { formatDate } from '@/lib/utils';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';

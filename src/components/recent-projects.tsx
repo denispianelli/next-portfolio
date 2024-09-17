@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Projects from '@/components/projects';
-import { getContent } from '@/lib/posts';
+import { getContent } from '@/lib/content';
 import { Badge } from './ui/badge';
 
 export default async function RecentProjects() {
