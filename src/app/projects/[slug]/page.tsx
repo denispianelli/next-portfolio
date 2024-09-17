@@ -5,7 +5,7 @@ import { formatDate } from '@/lib/utils';
 import MDXContent from '@/components/mdx-content';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { notFound } from 'next/navigation';
-import { getContent, getContentBySlug } from '@/lib/posts';
+import { getContent, getContentBySlug } from '@/lib/content';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
 import GitHub from '@/components/icons/github';

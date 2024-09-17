@@ -1,5 +1,5 @@
 import Projects from '@/components/projects';
-import { getContent } from '@/lib/posts';
+import { getContent } from '@/lib/content';
 import { Metadata } from 'next';
 
 /**

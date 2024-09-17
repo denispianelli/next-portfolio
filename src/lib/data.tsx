@@ -3,6 +3,7 @@ import LinkedIn from '@/components/icons/linkedin';
 import { FolderKanban, HomeIcon, Mail, NotebookText } from 'lucide-react';
 
 export const DATA = {
+  baseUrl: 'https://www.denispianelli.dev',
   navbar: [
     { href: '/', icon: HomeIcon, label: 'Home' },
     { href: '/posts', icon: NotebookText, label: 'Posts' },
