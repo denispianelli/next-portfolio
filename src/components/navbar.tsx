@@ -16,7 +16,11 @@ export default function Navbar() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href={item.href}>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button
+                    aria-label={item.label}
+                    variant={'ghost'}
+                    size={'icon'}
+                  >
                     <item.icon className="size-4" />
                   </Button>
                 </Link>
@@ -33,7 +37,11 @@ export default function Navbar() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href={value.url} target="_blank">
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button
+                    aria-label={value.name}
+                    variant={'ghost'}
+                    size={'icon'}
+                  >
                     <value.icon className="size-4" />
                   </Button>
                 </Link>
