@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { Inter, Playfair_Display } from 'next/font/google';
 
 import { Analytics } from '@vercel/analytics/react';
@@ -6,12 +7,12 @@ import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/components/theme-provider';
 import Footer from '@/components/footer';
 import { Toaster } from '@/components/ui/sonner';
+import Navbar from '@/components/navbar';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 import { cn } from '@/lib/utils';
 
 import '../styles/globals.css';
-import Navbar from '@/components/navbar';
-import { TooltipProvider } from '@/components/ui/tooltip';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfairDisplay = Playfair_Display({
@@ -34,6 +35,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const isAdmin = cookieStore.get('isAdmin');
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -56,7 +60,7 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>{' '}
         <Toaster />
-        <Analytics />
+        {!isAdmin && <Analytics />}
       </body>
     </html>
   );
